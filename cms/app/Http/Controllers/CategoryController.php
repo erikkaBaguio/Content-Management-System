@@ -14,6 +14,12 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return $categories;
+        return response()->json(['status'=>'OK', 'data'=>$categories, 'message'=>'Successfully retrieve categories.']);
+    }
+
+
+    public function show(Category $category)
+    {
+        return response()->json(['status'=>'OK', 'data'=>$category, 'message'=>'Successfully retrieve category.']);
     }
 }

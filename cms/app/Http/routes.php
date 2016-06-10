@@ -17,3 +17,5 @@ Route::get('/', function () {
 
 
 Route::get('categories', 'CategoryController@index');
+
+Route::get('categories/{category}', 'CategoryController@show');
