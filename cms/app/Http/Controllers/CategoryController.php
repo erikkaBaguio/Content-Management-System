@@ -18,9 +18,9 @@ class CategoryController extends Controller
     }
 
 
-    public function show(Category $category)
+    public function create()
     {
-        return response()->json(['status'=>'OK', 'data'=>$category, 'message'=>'Successfully retrieve category.']);
+        return view('category.create');
     }
 
 
@@ -31,13 +31,41 @@ class CategoryController extends Controller
             'description' => 'required'
         ]);
 
-        $category = new Category;
+        $input = $request->all();
 
-        $category->name = $request->input('name');
-        $category->description = $request->input('description');
+        $category = new Category($input);
+
+        // $category->name = $request->input('name');
+        // $category->description = $request->input('description');
         // $category-> = $request->input();
         $category->save();
 
         return response()->json(['status'=>'OK', 'message'=>'Successfully saved.']);
     }
+
+
+    public function show(Category $category)
+    {
+        return response()->json(['status'=>'OK', 'data'=>$category, 'message'=>'Successfully retrieve category.']);
+    }
+
+
+    public function edit($id)
+   {
+      //
+   }
+
+
+   public function update($id)
+   {
+      //
+   }
+
+
+   public function destroy($id)
+   {
+      //
+   }
+
+
 }
