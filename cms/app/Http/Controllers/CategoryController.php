@@ -79,7 +79,8 @@ class CategoryController extends Controller
     */
    public function edit($id)
    {
-      //
+      $category = Category::find($id);
+      return view('category.edit', compact('category'));
    }
    /**
     * Update the specified resource in storage.
@@ -89,7 +90,11 @@ class CategoryController extends Controller
     */
    public function update($id)
    {
-      //
+        $updateCategory = Request::all();
+        $category = Category::find($id);
+        $book->update($updateCategory);
+
+        return redirect('categories'); 
    }
    /**
     * Remove the specified resource from storage.

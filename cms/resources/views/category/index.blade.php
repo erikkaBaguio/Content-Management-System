@@ -20,7 +20,7 @@
              <td>{{ $category->name }}</td>
              <td>{{ $category->description}}</td>
              <td><a href="{{$category->id}}" class="btn btn-primary">Read</a></td>
-             <td><a href="#" class="btn btn-warning">Update</a></td>
+             <td><a href="{{  url($category->id/edit) }}" class="btn btn-warning">Update</a></td>
              <td><a href="#" class="btn btn-danger">Delete</a></td>
          </tr>
      @endforeach
