@@ -1,36 +1,31 @@
 @extends('layout/template')
 
 @section('content')
- <h1>Peru BookStore</h1>
- <a href="{{url('/books/create')}}" class="btn btn-success">Create Book</a>
- <hr>
+ <center><h1>Simple Content-Management-System</h1>
+ <a href="{{url('/categories/create')}}" class="btn btn-success">Create Category</a>
+ <hr></center>
  <table class="table table-striped table-bordered table-hover">
      <thead>
      <tr class="bg-info">
-         <th>Id</th>
+         <th>ID</th>
          <th>Name</th>
          <th>Description</th>
          <th colspan="3">Actions</th>
      </tr>
      </thead>
      <tbody>
-     @foreach ($books as $book)
+     @foreach ($categories as $category)
          <tr>
              <td>{{ $category->id }}</td>
              <td>{{ $category->name }}</td>
-             <td>{{ $category->description }}</td>
-             <!-- <td><img src="{{asset('img/'.$book->image.'.jpg')}}" height="35" width="30"></td>
-             <td><a href="{{url('books',$book->id)}}" class="btn btn-primary">Read</a></td>
-             <td><a href="{{route('books.edit',$book->id)}}" class="btn btn-warning">Update</a></td> -->
-             <td>
-             <!-- {!! Form::open(['method' => 'DELETE', 'route'=>['books.destroy', $book->id]]) !!}
-             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-             {!! Form::close() !!} -->
-             </td>
+             <td>{{ $category->description}}</td>
+             <td><a href="{{$category->id}}" class="btn btn-primary">Read</a></td>
+             <td><a href="#" class="btn btn-warning">Update</a></td>
+             <td><a href="#" class="btn btn-danger">Delete</a></td>
          </tr>
      @endforeach
 
      </tbody>
 
  </table>
-@stop
+@endsection

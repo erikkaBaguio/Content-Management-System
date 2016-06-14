@@ -3,25 +3,27 @@
 
 @section('content')
 	<h1>Create category</h1>
+	<div class="col-md-4">
+		@if(Session::has('flash_message'))
+	        <div class="alert alert-success">
+	            {{ Session::get('flash_message') }}
+	        </div>
+	    @endif
 
-	<form method="POST">
-	<!-- {{ method_field('PATCH') }} -->
-	{{ csrf_field() }}
-	<input type="hidden" name="method" value="PATCH">
-
-		<div class="form-group">
-			<textarea name="name" class="form-control"></textarea>
-		</div>
-
-        <div class="form-group">
-			<textarea name="description" class="form-control"></textarea>
-		</div>
-
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary">Add Category</button>
-		</div>
-
-
-	</form>
+		<form method="POST" action="{{ url('categories') }}">
+		<!-- {{ method_field('PATCH') }} -->
+		{{ csrf_field() }}
+		<input type="hidden" name="method" value="PATCH">
+			<div class="form-group">
+				Name<input name="name" class="form-control" required></input>
+			</div>
+			<div class="form-group">
+				Description<input name="description" class="form-control" required></input>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-success">Save</button>
+			</div>
+		</form>
+	</div>
 
 @stop
