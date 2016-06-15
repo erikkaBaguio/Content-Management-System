@@ -6,8 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    public function itemCategories()
+
+    protected $fillable = [
+        'name',
+        'description',
+        'unit_cost'
+    ];
+
+
+    public function categories()
     {
-        return $this->hasMany(ItemCategory::class);
+        return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
     }
+
 }

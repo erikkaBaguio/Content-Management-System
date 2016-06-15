@@ -12,3 +12,5 @@
 */
 
 Route::resource('categories', 'CategoryController');
+
+Route::resource('items', 'ItemController');
