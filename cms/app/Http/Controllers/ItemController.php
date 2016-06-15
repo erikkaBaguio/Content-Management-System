@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Item;
 
+use Session;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -114,7 +116,7 @@ class ItemController extends Controller
        $item = Item::findOrFail($id);
        $item->delete();
 
-       Session::flash('flash_message', 'Category successfully deleted!');
+       Session::flash('flash_message', 'Item successfully deleted!');
        return back();
    }
 }

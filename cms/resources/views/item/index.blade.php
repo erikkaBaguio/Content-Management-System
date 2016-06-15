@@ -2,7 +2,7 @@
 
 @section('content')
  <center><h1>Simple Content-Management-System</h1>
- <a href="{{url('/categories/create')}}" class="btn btn-success">Create Category</a>
+ <a href="{{url('/items/create')}}" class="btn btn-success">Create Category</a>
  <hr></center>
 
  @if(Session::has('flash_message'))
