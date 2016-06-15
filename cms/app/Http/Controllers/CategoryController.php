@@ -88,14 +88,23 @@ class CategoryController extends Controller
     * @param  int  $id
     * @return Response
     */
-   public function update($id)
-   {
-        $updateCategory = Request::all();
-        $category = Category::find($id);
-        $book->update($updateCategory);
+   public function update($id, Request $request)
+    {
+        $category = Category::findOrFail($id);
 
-        return redirect('categories'); 
-   }
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+
+        $input = $request->all();
+
+        $category->fill($input)->save();
+
+        Session::flash('flash_message', 'Category successfully updated!');
+
+        return redirect()->back();
+    }
    /**
     * Remove the specified resource from storage.
     *
@@ -104,6 +113,10 @@ class CategoryController extends Controller
     */
    public function destroy($id)
    {
-      //
+       $category = Category::findOrFail($id);
+       $category->delete();
+
+       Session::flash('flash_message', 'Category successfully deleted!');
+       return back();
    }
 }

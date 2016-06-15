@@ -1,7 +1,7 @@
 @extends('layout/template')
 
 @section('content')
-	<h1>Update category</h1>
+	<h1>Update Category</h1>
 	<div class="col-md-4">
 		@if(Session::has('flash_message'))
 	        <div class="alert alert-success">
@@ -9,15 +9,16 @@
 	        </div>
 	    @endif
 
-		<form method="POST">
-		{{ method_field('PATCH') }}
+		<form method="POST" action="{{ route('categories.update', $category->id)}}" >
+		{{ method_field('PUT') }}
 		{{ csrf_field() }}
 		<!-- <input type="hidden" name="method" value="PATCH"> -->
 			<div class="form-group">
-				Name<input name="name" class="form-control" required>{{$category-name>}}</input>
+				Name<input name="name" class="form-control" value="{{$category->name}}" required></input>
 			</div>
 			<div class="form-group">
-				Description<input name="description" class="form-control" required>{{$category->desription}}<//input>
+				<!-- Description<input name="description" class="form-control" value="{{$category->description}}" required></input> -->
+				Description<input name="description" class="form-control" value="{{$category->description}}" required></input>
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">Update</button>
