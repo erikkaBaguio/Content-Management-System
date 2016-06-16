@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Item;
 
+use App\Category;
+
 use Session;
 
 use Illuminate\Http\Request;
@@ -29,7 +31,8 @@ class ItemController extends Controller
     */
    public function create()
    {
-      return view('item.create');
+       $categories = Category::lists('name', 'id');
+       return view('item.create', compact('categories'));
    }
    /**
     * Store a newly created resource in storage.
@@ -38,9 +41,7 @@ class ItemController extends Controller
     */
    public function store(Request $request)
    {
-        // $category = Request::all();
-        // Category::create($category);
-        // return redirect('categories');
+    //    dd($request->input('categories'));
 
         $this->validate($request, [
             'name' => 'required',
@@ -48,9 +49,10 @@ class ItemController extends Controller
             'unit_cost'=> 'required'
         ]);
 
-        $input = $request->all();
 
-        $item = new Item($input);
+        $item = Item::create($request->all());
+
+        $item->categories()->attach($request->input('categories'));
 
         $item->save();
 
@@ -79,7 +81,9 @@ class ItemController extends Controller
    public function edit($id)
    {
       $item = Item::find($id);
-      return view('item.edit', compact('item'));
+      $categories = Category::lists('name', 'id');
+
+      return view('item.edit', compact('item','categories'));
    }
    /**
     * Update the specified resource in storage.
@@ -89,21 +93,28 @@ class ItemController extends Controller
     */
    public function update($id, Request $request)
     {
-        $item = Item::findOrFail($id);
-
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
             'unit_cost' => 'required'
         ]);
 
-        $input = $request->all();
-
-        $item->fill($input)->save();
-
+        $item = Item::find($id);
+        $item->update($request->all());
         Session::flash('flash_message', 'Item successfully updated!');
+        return redirect('items');
 
-        return redirect()->back();
+        // $item = Item::findOrFail($id);
+        //
+
+        //
+        // $input = $request->all();
+        //
+        // $item->fill($input)->save();
+
+
+
+        // return redirect()->back();
     }
    /**
     * Remove the specified resource from storage.

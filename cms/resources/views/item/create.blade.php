@@ -23,6 +23,10 @@
 				Unit Cost<input type="integer" name="unit_cost" class="form-control" required></input>
 			</div>
 			<div class="form-group">
+				{!! Form::label('categories', 'Categories:') !!}
+				{!! Form::select('categories[]', $categories, null, ['class'=>'form-control', 'multiple']) !!}
+			</div>
+			<div class="form-group">
 				<button type="submit" class="btn btn-success">Save</button>
 			</div>
 		</form>

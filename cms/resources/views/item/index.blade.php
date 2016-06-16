@@ -29,7 +29,7 @@
              <td>{{ $item->description}}</td>
              <td>{{ $item->unit_cost}}</td>
              <td><a href="{{ route('items.show', $item->id) }}" class="btn btn-primary">Read</a></td>
-             <td><a href="{{ route('items.edit', $item->id) }}" class="btn btn-warning">Update</a></td>
+             <!-- <td><a href="{{ route('items.edit', $item->id) }}" class="btn btn-warning">Update</a></td> -->
              <td>
                 <form method="POST" action="{{ route('items.destroy', $item->id) }}">
                     {{ csrf_field() }}

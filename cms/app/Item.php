@@ -24,4 +24,10 @@ class Item extends Model
         return $this->belongsToMany('App\Category', 'category_item', 'item_id', 'category_id');
     }
 
+
+    public function getCategoryListAttribute()
+    {
+        return $this->categories->lists('id')->all();
+    }
+
 }
