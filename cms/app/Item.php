@@ -14,9 +14,14 @@ class Item extends Model
     ];
 
 
+    /**
+    *Get the categories associated with the given item.
+    *
+    *@return Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'item_categories', 'item_id', 'category_id');
+        return $this->belongsToMany('App\Category', 'category_item', 'item_id', 'category_id');
     }
 
 }
