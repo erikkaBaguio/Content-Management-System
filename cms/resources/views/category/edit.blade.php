@@ -15,11 +15,7 @@
 		<!-- <input type="hidden" name="method" value="PATCH"> -->
 			<div class="form-group">
 				Name<input name="name" class="form-control" value="{{$category->name}}" required></input>
-			</div>
-			<div class="form-group">
-				<!-- Description<input name="description" class="form-control" value="{{$category->description}}" required></input> -->
-				Description<input name="description" class="form-control" value="{{$category->description}}" required></input>
-			</div>
+			</div>			
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">Update</button>
 			</div>

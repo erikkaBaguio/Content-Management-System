@@ -23,8 +23,8 @@
 				Unit Cost<input type="number" name="unit_cost" class="form-control" value="{{$item->unit_cost}}" required></input>
 			</div>
 			<div class="form-group">
-				{!! Form::label('categorylist', 'Categories:') !!}
-				{!! Form::select('categorylist[]', $categories, null, ['class'=>'form-control', 'multiple']) !!}
+				{!! Form::label('categories', 'Categories:') !!}
+				{!! Form::select('categories[]', $categories, null, ['class'=>'form-control', 'multiple']) !!}
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">Update</button>

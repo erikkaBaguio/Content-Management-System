@@ -13,4 +13,5 @@
     @endunless
 
     <a href="{{ url('items')}}" class="btn btn-primary">Back</a>
+    <a href="{{ route('items.edit', $item->id) }}" class="btn btn-warning">Update</a>
 @stop

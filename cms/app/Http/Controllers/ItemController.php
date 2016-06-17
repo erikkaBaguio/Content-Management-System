@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Item;
+use App\Http\Models\Item;
 
-use App\Category;
+use App\Http\Models\Category;
 
 use Session;
 
@@ -100,21 +100,13 @@ class ItemController extends Controller
         ]);
 
         $item = Item::find($id);
+        $item->categories()->attach($request->input('categories'));
+
         $item->update($request->all());
+
         Session::flash('flash_message', 'Item successfully updated!');
         return redirect('items');
 
-        // $item = Item::findOrFail($id);
-        //
-
-        //
-        // $input = $request->all();
-        //
-        // $item->fill($input)->save();
-
-
-
-        // return redirect()->back();
     }
    /**
     * Remove the specified resource from storage.
