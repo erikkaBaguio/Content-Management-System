@@ -73,7 +73,9 @@ class ItemController extends Controller
    public function show($id)
    {
       $item = Item::find($id);
-      return view('item.show', compact('item'));
+
+      $response = ['item' => $item];
+      return ResponseService::success('Here\'s the item', $response);
    }
 
    /**
