@@ -114,7 +114,7 @@ class CategoryController extends Controller
        $category = Category::findOrFail($id);
        $category->delete();
 
-       Session::flash('flash_message', 'Category successfully deleted!');
-       return back();
+       $response = ['category' => $category, 'status' => 'Deleted category'];
+       return ResponseService::success('DELETE_SUCCEEDED', $response, 200, 'Successfully deleted category.');
    }
 }
