@@ -50,7 +50,7 @@ class ItemController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
-            'unit_cost'=> 'required'
+            'unit_cost'=> 'required',
         ]);
 
 

@@ -93,17 +93,15 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         $this->validate($request, [
-            'name' => 'required',
-            'description' => 'required'
+            'name' => 'required'
         ]);
 
         $input = $request->all();
 
         $category->fill($input)->save();
 
-        Session::flash('flash_message', 'Category successfully updated!');
-
-        return redirect()->back();
+        $response = ['category'=>$category];
+        return ResponseService::success('UPDATE_SUCCEEDED', $response, 200, 'Updated category successfully.');
     }
    /**
     * Remove the specified resource from storage.
