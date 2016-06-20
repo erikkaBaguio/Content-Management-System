@@ -25,7 +25,7 @@ class CategoryController extends Controller
    {
        $data = Category::all();
 
-       $response = ['categories' => $categories];
+       $response = ['categories' => $data];
        return ResponseService::success('Here\'s the following categories', $response);
    }
    /**

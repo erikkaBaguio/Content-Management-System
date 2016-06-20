@@ -8,6 +8,8 @@ use App\Http\Models\Category;
 
 use Session;
 
+use App\Http\Services\ResponseService;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,7 +24,9 @@ class ItemController extends Controller
    public function index()
    {
        $items = Item::all();
-       return view('item.index',compact('items'));
+
+       $response =  ['items'=> $items];
+       return ResponseService::success('Here\'s the following items', $response);
    }
    /**
     * Show the form for creating a new resource.
