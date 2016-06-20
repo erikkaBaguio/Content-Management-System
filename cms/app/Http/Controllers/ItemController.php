@@ -60,9 +60,8 @@ class ItemController extends Controller
 
         $item->save();
 
-        Session::flash('flash_message', 'Item successfully added!');
-
-        return redirect()->back();
+        $response = ['item' => $item];
+        return ResponseService::success('INSERTED_SUCCEEDED', $response, 200, 'Item successfully inserted.');
    }
    /**
     * Display the specified resource.
