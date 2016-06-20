@@ -27,7 +27,7 @@ class Item extends Model
 
     public function getCategoryListAttribute()
     {
-        return $this->categories->lists('id')->all();
+        return $this->categories()->lists('id')->all();
     }
 
 }

@@ -101,7 +101,7 @@ class CategoryController extends Controller
         $category->fill($input)->save();
 
         $response = ['category'=>$category];
-        return ResponseService::success('UPDATE_SUCCEEDED', $response, 200, 'Updated category successfully.');
+        return ResponseService::success('UPDATE_SUCCEEDED', $response, 200, 'Category Successfully Updated.');
     }
    /**
     * Remove the specified resource from storage.
@@ -115,6 +115,6 @@ class CategoryController extends Controller
        $category->delete();
 
        $response = ['category' => $category, 'status' => 'Deleted category'];
-       return ResponseService::success('DELETE_SUCCEEDED', $response, 200, 'Successfully deleted category.');
+       return ResponseService::success('DELETE_SUCCEEDED', $response, 200, 'Category Successfully Deleted.');
    }
 }

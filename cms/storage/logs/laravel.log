@@ -20434,3 +20434,15 @@ Stack trace:
 #41 C:\xampp\htdocs\Content-Management-System\cms\public\index.php(54): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
 #42 C:\xampp\htdocs\Content-Management-System\cms\server.php(21): require_once('C:\\xampp\\htdocs...')
 #43 {main}  
+[2016-06-20 18:28:30] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Call to a member function categories() on null' in C:\xampp\htdocs\Content-Management-System\cms\app\Http\Controllers\ItemController.php:108
+Stack trace:
+#0 {main}  
+[2016-06-20 18:31:36] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Call to a member function categories() on null' in C:\xampp\htdocs\Content-Management-System\cms\app\Http\Controllers\ItemController.php:108
+Stack trace:
+#0 {main}  
+[2016-06-20 18:32:09] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Call to a member function categories() on null' in C:\xampp\htdocs\Content-Management-System\cms\app\Http\Controllers\ItemController.php:108
+Stack trace:
+#0 {main}  
+[2016-06-20 18:39:04] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Call to undefined function App\Http\Controllers\REsponseService()' in C:\xampp\htdocs\Content-Management-System\cms\app\Http\Controllers\ItemController.php:128
+Stack trace:
+#0 {main}  

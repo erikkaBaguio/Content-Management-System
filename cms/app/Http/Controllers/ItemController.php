@@ -61,7 +61,7 @@ class ItemController extends Controller
         $item->save();
 
         $response = ['item' => $item];
-        return ResponseService::success('INSERTED_SUCCEEDED', $response, 200, 'Item successfully inserted.');
+        return ResponseService::success('INSERT_SUCCEEDED', $response, 200, 'Item Successfully Inserted.');
    }
    /**
     * Display the specified resource.
@@ -109,8 +109,8 @@ class ItemController extends Controller
 
         $item->update($request->all());
 
-        Session::flash('flash_message', 'Item successfully updated!');
-        return redirect('items');
+        $response = ['item' => $item];
+        return ResponseService::success('UPDATE_SUCCEEDED', $response, 200, 'Item Successfully Updated.');
 
     }
    /**
@@ -124,7 +124,7 @@ class ItemController extends Controller
        $item = Item::findOrFail($id);
        $item->delete();
 
-       Session::flash('flash_message', 'Item successfully deleted!');
-       return back();
+       $response = ['item' => $item, 'status' => 'Deleted item.'];
+       return ResponseService::success('DELETE_SUCCEEDED', $response, 200, 'Item Successfully Deleted.');
    }
 }
