@@ -6,6 +6,8 @@ use App\Http\Models\Category;
 
 use Illuminate\Http\Request;
 
+use App\Http\Services\ResponseService;
+
 use App\Http\Requests;
 
 use Session;
@@ -21,8 +23,10 @@ class CategoryController extends Controller
     */
    public function index()
    {
-       $categories = Category::all();
-       return view('category.index',compact('categories'));
+       $data = Category::all();
+
+       $response = ['categories' => $categories];
+       return ResponseService::success('Here\'s the following categories', $response);
    }
    /**
     * Show the form for creating a new resource.
