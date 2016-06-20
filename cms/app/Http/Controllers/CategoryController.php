@@ -44,13 +44,8 @@ class CategoryController extends Controller
     */
    public function store(Request $request)
    {
-        // $category = Request::all();
-        // Category::create($category);
-        // return redirect('categories');
-
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'required'
         ]);
 
         $input = $request->all();
@@ -59,9 +54,8 @@ class CategoryController extends Controller
 
         $category->save();
 
-        Session::flash('flash_message', 'Category successfully added!');
-
-        return redirect()->back();
+        $response = ['category'=>$category];
+        return ResponseService::success("INSERT_SUCCEEDED", $response, 200, "Category Successfully Inserted.");
    }
    /**
     * Display the specified resource.
@@ -74,7 +68,7 @@ class CategoryController extends Controller
       $category = Category::find($id);
 
       $response = ['category' => $category];
-      return ResponseService::('Here\'s the category', $response);
+      return ResponseService::success('Here\'s the category', $response);
    }
 
    /**

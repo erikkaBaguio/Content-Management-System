@@ -17,9 +17,6 @@
 				Name<input name="name" class="form-control" required></input>
 			</div>
 			<div class="form-group">
-				Description<input name="description" class="form-control" required></input>
-			</div>
-			<div class="form-group">
 				<button type="submit" class="btn btn-success">Save</button>
 			</div>
 		</form>
