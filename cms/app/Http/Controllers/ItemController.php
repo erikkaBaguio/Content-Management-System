@@ -108,19 +108,28 @@ class ItemController extends Controller
     */
    public function update($id, Request $request)
     {
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
-            'unit_cost' => 'required'
+            'unit_cost'=> 'required',
         ]);
 
-        $item = Item::findOrFail($id);
-        $item->categories()->attach($request->input('categories'));
+        if (!$validator->fails())
+        {
+            $item = Item::findOrFail($id);
+            $item->categories()->attach($request->input('categories'));
 
-        $item->update($request->all());
+            $item->update($request->all());
 
-        $response = ['item' => $item];
-        return ResponseService::success('UPDATE_SUCCEEDED', $response, 200, 'Item Successfully Updated.');
+            $response = ['item' => $item];
+            return ResponseService::success('UPDATE_SUCCEEDED', $response, 200, 'Item Successfully Updated.');
+        }
+        else
+        {
+            $response = ['item' => $validator->errors()];
+            return ResponseService::success('UPDATE_FAILED', $response, 400, 'Failed To Update Item.');
+        }
 
     }
    /**
