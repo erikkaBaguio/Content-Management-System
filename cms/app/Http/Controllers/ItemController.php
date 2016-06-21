@@ -49,30 +49,14 @@ class ItemController extends Controller
    {
     //    dd($request->input('categories'));
 
-        // $this->validate($request, [
-        //     'name' => 'required',
-        //     'description' => 'required',
-        //     'unit_cost'=> 'required',
-        // ]);
-
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
             'unit_cost'=> 'required',
         ]);
 
-        dd($validator);
-
-
-
-        if ($validator->fails()) {
-            return
-            // redirect('items')
-            //             ->withErrors($validator)
-            //             ->withInput();
-            $response = ['item' => $validator];
-            return ResponseService::success('INSERT_FAILED', $response, 200, 'Item Successfully Inserted.');
-        }else {
+        if (!$validator->fails())
+        {
             $item = Item::create($request->all());
 
             $item->categories()->attach($request->input('categories'));
@@ -82,8 +66,11 @@ class ItemController extends Controller
             $response = ['item' => $item];
             return ResponseService::success('INSERT_SUCCEEDED', $response, 200, 'Item Successfully Inserted.');
         }
-
-
+        else
+        {
+            $response = ['item' => $validator->errors()];
+            return ResponseService::success('INSERT_FAILED', $response, 400, 'Item Insertion Failed.');
+        }
 
    }
    /**
@@ -127,7 +114,7 @@ class ItemController extends Controller
             'unit_cost' => 'required'
         ]);
 
-        $item = Item::find($id);
+        $item = Item::findOrFail($id);
         $item->categories()->attach($request->input('categories'));
 
         $item->update($request->all());
