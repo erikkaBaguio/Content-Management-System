@@ -14,12 +14,22 @@
 		{{ csrf_field() }}
 		<input type="hidden" name="method" value="PATCH">
 			<div class="form-group">
-				Name<input name="name" class="form-control" required></input>
+				Name<input name="name" class="form-control"></input>
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-success">Save</button>
 			</div>
 		</form>
+
+		@if ($errors)
+			<div class="alert alert-danger">
+				@foreach ($errors->all() as $error)
+					<li> {{ $error }} </li>
+				@endforeach
+			</div>
+		@endif
 	</div>
+
+
 
 @stop

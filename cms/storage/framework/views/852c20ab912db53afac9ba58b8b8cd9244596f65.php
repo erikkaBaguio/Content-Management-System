@@ -13,13 +13,23 @@
 
 		<input type="hidden" name="method" value="PATCH">
 			<div class="form-group">
-				Name<input name="name" class="form-control" required></input>
+				Name<input name="name" class="form-control"></input>
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-success">Save</button>
 			</div>
 		</form>
+
+		<?php if($errors): ?>
+			<div class="alert alert-danger">
+				<?php foreach($errors->all() as $error): ?>
+					<li> <?php echo e($error); ?> </li>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
 	</div>
+
+
 
 <?php $__env->stopSection(); ?>
 

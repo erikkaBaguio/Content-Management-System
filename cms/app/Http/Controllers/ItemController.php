@@ -8,6 +8,8 @@ use App\Http\Models\Category;
 
 use Session;
 
+use Validator;
+
 use App\Http\Services\ResponseService;
 
 use Illuminate\Http\Request;
@@ -47,21 +49,42 @@ class ItemController extends Controller
    {
     //    dd($request->input('categories'));
 
-        $this->validate($request, [
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'description' => 'required',
+        //     'unit_cost'=> 'required',
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
             'unit_cost'=> 'required',
         ]);
 
+        dd($validator);
 
-        $item = Item::create($request->all());
 
-        $item->categories()->attach($request->input('categories'));
 
-        $item->save();
+        if ($validator->fails()) {
+            return
+            // redirect('items')
+            //             ->withErrors($validator)
+            //             ->withInput();
+            $response = ['item' => $validator];
+            return ResponseService::success('INSERT_FAILED', $response, 200, 'Item Successfully Inserted.');
+        }else {
+            $item = Item::create($request->all());
 
-        $response = ['item' => $item];
-        return ResponseService::success('INSERT_SUCCEEDED', $response, 200, 'Item Successfully Inserted.');
+            $item->categories()->attach($request->input('categories'));
+
+            $item->save();
+
+            $response = ['item' => $item];
+            return ResponseService::success('INSERT_SUCCEEDED', $response, 200, 'Item Successfully Inserted.');
+        }
+
+
+
    }
    /**
     * Display the specified resource.

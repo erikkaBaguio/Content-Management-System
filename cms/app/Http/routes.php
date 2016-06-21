@@ -12,23 +12,24 @@
 */
 
 /*
-Sample of redtful cpntroller
-GET|HEAD	    books	              books.index	App\Http\Controllers\BookController@index
-
-GET|HEAD	    books/create	      books.create	App\Http\Controllers\BookController@create
-
-POST	        books	              books.store	App\Http\Controllers\BookController@store
-
-GET|HEAD	    books/{books}	      books.show	App\Http\Controllers\BookController@show
-
-GET|HEAD	    books/{books}/edit	  books.edit	App\Http\Controllers\BookController@edit
-
-PUT	            books/{books}	      books.update	App\Http\Controllers\BookController@update
-
-PATCH	        books/{books}	                    App\Http\Controllers\BookController@update
-
-DELETE	        books/{books}	      books.destroy	App\Http\Controllers\BookController@destroy
-*/
++--------+-----------+------------------------------+--------------------+-------------------------------------------------+------------+
+| Domain | Method    | URI                          | Name               | Action                                          | Middleware |
++--------+-----------+------------------------------+--------------------+-------------------------------------------------+------------+
+|        | GET|HEAD  | categories                   | categories.index   | App\Http\Controllers\CategoryController@index   | web        |
+|        | POST      | categories                   | categories.store   | App\Http\Controllers\CategoryController@store   | web        |
+|        | GET|HEAD  | categories/create            | categories.create  | App\Http\Controllers\CategoryController@create  | web        |
+|        | PUT|PATCH | categories/{categories}      | categories.update  | App\Http\Controllers\CategoryController@update  | web        |
+|        | DELETE    | categories/{categories}      | categories.destroy | App\Http\Controllers\CategoryController@destroy | web        |
+|        | GET|HEAD  | categories/{categories}      | categories.show    | App\Http\Controllers\CategoryController@show    | web        |
+|        | GET|HEAD  | categories/{categories}/edit | categories.edit    | App\Http\Controllers\CategoryController@edit    | web        |
+|        | POST      | items                        | items.store        | App\Http\Controllers\ItemController@store       | web        |
+|        | GET|HEAD  | items                        | items.index        | App\Http\Controllers\ItemController@index       | web        |
+|        | GET|HEAD  | items/create                 | items.create       | App\Http\Controllers\ItemController@create      | web        |
+|        | DELETE    | items/{items}                | items.destroy      | App\Http\Controllers\ItemController@destroy     | web        |
+|        | PUT|PATCH | items/{items}                | items.update       | App\Http\Controllers\ItemController@update      | web        |
+|        | GET|HEAD  | items/{items}                | items.show         | App\Http\Controllers\ItemController@show        | web        |
+|        | GET|HEAD  | items/{items}/edit           | items.edit         | App\Http\Controllers\ItemController@edit        | web        |
++--------+-----------+------------------------------+--------------------+-------------------------------------------------+------------+*/
 
 
 Route::resource('categories', 'CategoryController');

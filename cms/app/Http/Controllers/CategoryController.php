@@ -10,7 +10,7 @@ use App\Http\Services\ResponseService;
 
 use App\Http\Requests;
 
-use Session;
+use Validator;
 
 use App\Http\Controllers\Controller;
 
@@ -44,9 +44,28 @@ class CategoryController extends Controller
     */
    public function store(Request $request)
    {
-        $this->validate($request, [
-            'name' => 'required',
+    //    dd($request->all());
+
+        // $validation = $this->validate($request, [
+        //     'name' => 'required',
+        // ]);
+
+        $validator = Validator::make($request->all(),[
+            'name' => 'required'
         ]);
+
+        if(!$validator->fails())
+        {
+            $category = Category::create($request->all());
+
+            $response = ['category'=>$category];
+            return ResponseService::success("INSERT_SUCCEEDED", $response, 200, "Category Successfully Inserted.");
+
+        }else{
+
+            $response = ['error' => $validator->errors()];
+            return ResponseService::error("INSERT_FAILED", $response, 400, "Category Insertion Failed.");
+        }
 
         $input = $request->all();
 
@@ -54,8 +73,6 @@ class CategoryController extends Controller
 
         $category->save();
 
-        $response = ['category'=>$category];
-        return ResponseService::success("INSERT_SUCCEEDED", $response, 200, "Category Successfully Inserted.");
    }
    /**
     * Display the specified resource.
@@ -92,16 +109,22 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        $this->validate($request, [
+        $validator = Validator::make($request->all(),[
             'name' => 'required'
         ]);
 
-        $input = $request->all();
+        if(!$validator->fails())
+        {
+            $category->update($request->all());
 
-        $category->fill($input)->save();
+            $response = ['category' => $category];
+            return ResponseService::success('UPDATE_SUCCEEDED', $response, 200, 'Category Successfully Updated.');
+        }else
+        {
+            $response = ['errors' => $validator->errors()];
+            return ResponseService::error('UPDATE_FAILED', $response, 400, 'Failed To Update Category.');
+        }
 
-        $response = ['category'=>$category];
-        return ResponseService::success('UPDATE_SUCCEEDED', $response, 200, 'Category Successfully Updated.');
     }
    /**
     * Remove the specified resource from storage.
