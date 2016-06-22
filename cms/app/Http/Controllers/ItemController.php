@@ -23,13 +23,34 @@ class ItemController extends Controller
     *
     * @return Response
     */
-   public function index()
+   public function index(Request $request)
    {
-        $data = Item::with(['categories'=>function($query){
-                    $query->select('name');
-                }])->get();
+    //    dd($request->all());
+       $inputs = $request->all();
 
-        // $data = Item::where('name','=','ok')->get();
+       foreach ($inputs as $input)
+       {
+           if($input === null){
+                $data = Item::with(['categories'=>function($query){
+                           $query->select('name');
+                        }])->get();
+
+           }else{
+
+                // $data = Item::with(['categories'=>function($query){
+                //            $query->select('name');
+                //         }])->where('name', 'like', '%' .$input. '%')
+                //         ->get();
+
+                $data = Item::with(['categories'=>function($query){
+                           $query->select('name');
+                        }])->where('name', 'like', '%' .$input. '%')
+                        ->orWhere('description', 'like', '%' .$input. '%')
+                        ->orWhere('unit_cost', 'like', '%' .$input. '%')
+                        ->get();
+           }
+       }
+
 
         if (count($data) === 0) {
                 $response = ['error' => [
@@ -45,10 +66,12 @@ class ItemController extends Controller
                 $message_code = $response['error']['response_code'];
 
                 return ResponseService::success($message, $data, 200, $message_code);
-                
+
         }else{
+
             $response =  ['items'=> $data];
             return ResponseService::success('Here\'s the following items', $response);
+
         }
 
 

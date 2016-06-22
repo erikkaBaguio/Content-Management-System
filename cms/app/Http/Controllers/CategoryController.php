@@ -27,7 +27,7 @@ class CategoryController extends Controller
 
         // $data = Category::where('name','=','ok')->get();
 
-       if (count($data) === 0) {
+        if (count($data) === 0) {
             $response = ['error' => [
                "http_code" => 200,
                "response_msg" => "No data found.",
@@ -72,7 +72,7 @@ class CategoryController extends Controller
         // ]);
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required'
+            'name' => 'required|min:3'
         ]);
 
         if(!$validator->fails())
@@ -131,7 +131,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required'
+            'name' => 'required|min:3'
         ]);
 
         if(!$validator->fails())
