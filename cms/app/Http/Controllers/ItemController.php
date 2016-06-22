@@ -25,10 +25,33 @@ class ItemController extends Controller
     */
    public function index()
    {
-       $items = Item::all();
+        $data = Item::with(['categories'=>function($query){
+                    $query->select('name');
+                }])->get();
 
-       $response =  ['items'=> $items];
-       return ResponseService::success('Here\'s the following items', $response);
+        // $data = Item::where('name','=','ok')->get();
+
+        if (count($data) === 0) {
+                $response = ['error' => [
+                    "http_code" => 200,
+                    "response_msg" => "No data found.",
+                    "response_code" => "NO_DATA_FOUND",
+                    "exception" => "No items found."
+                    ]
+                ];
+
+                $data = ['error'=> $response['error']['exception']];
+                $message = $response['error']['response_msg'];
+                $message_code = $response['error']['response_code'];
+
+                return ResponseService::success($message, $data, 200, $message_code);
+                
+        }else{
+            $response =  ['items'=> $data];
+            return ResponseService::success('Here\'s the following items', $response);
+        }
+
+
    }
    /**
     * Show the form for creating a new resource.
