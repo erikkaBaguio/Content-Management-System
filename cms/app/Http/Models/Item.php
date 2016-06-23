@@ -4,6 +4,8 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\QueryFilter;
+
 class Item extends Model
 {
 
@@ -28,6 +30,12 @@ class Item extends Model
     public function getCategoryListAttribute()
     {
         return $this->categories()->lists('id')->all();
+    }
+
+
+    public function filter($query, QueryFilter $filters)
+    {
+        return $filters->apply($query);
     }
 
 }
