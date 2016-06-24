@@ -53,9 +53,6 @@ class ItemController extends Controller
                 }else{
                     $data = null;
                 }
-
-
-
             }
 
             if ($request->exists('name'))

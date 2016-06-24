@@ -23,31 +23,68 @@ class CategoryController extends Controller
     *
     * @return Response
     */
-   public function index()
+   public function index(Request $request)
    {
-       $data = Category::all();
+        $data = Category::all();
 
-        // $data = Category::where('name','=','ok')->get();
+        try {
+            if ($request->exists('name')){
+                $input = $request->name;
 
-        if (count($data) === 0) {
+                $data = Category::where('name','like','%' .$input. '%')->get();
+            }
+
+            if ($request->exists('created_at'))
+            {
+            	$input = $request->created_at;
+
+            	$data = Category::where('created_at', 'like', '%' .$input. '%')
+            			->get();
+            }
+
+            if ($request->exists('updated_at'))
+            {
+            	$input = $request->updated_at;
+
+            	$data = Category::where('updated_at', 'like', '%' .$input. '%')
+            			->get();
+            }
+
+            if (count($data) === 0) {
+                $response = ['error' => [
+                   "http_code" => 200,
+                   "response_msg" => "No data found.",
+                   "response_code" => "NO_DATA_FOUND",
+                   "exception" => "No items found."
+                   ]
+                ];
+
+                $data = ['error'=> $response['error']['exception']];
+                $message = $response['error']['response_msg'];
+                $message_code = $response['error']['response_code'];
+
+                return ResponseService::success($message, $data, 200, $message_code);
+
+            }else{
+
+                $response = ['categories' => $data];
+                return ResponseService::success('Here\'s the following categories', $response);
+            }
+
+        } catch (\Exception $e) {
             $response = ['error' => [
-               "http_code" => 200,
-               "response_msg" => "No data found.",
-               "response_code" => "NO_DATA_FOUND",
-               "exception" => "No items found."
-               ]
+             "http_code" => 400,
+             "response_msg" => "UNDEFINED",
+             "response_code" => "UNDEFINED",
+             "exception" =>"NO DATA"
+             ]
             ];
 
             $data = ['error'=> $response['error']['exception']];
             $message = $response['error']['response_msg'];
             $message_code = $response['error']['response_code'];
 
-            return ResponseService::success($message, $data, 200, $message_code);
-
-        }else{
-
-            $response = ['categories' => $data];
-            return ResponseService::success('Here\'s the following categories', $response);
+            return ResponseService::error($message, $data, 400, $message_code);
         }
 
    }
