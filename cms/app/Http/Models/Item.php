@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\QueryFilter;
 
+use App\Filterable;
+
 class Item extends Model
 {
 

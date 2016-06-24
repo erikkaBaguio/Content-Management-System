@@ -18,18 +18,106 @@ use App\Http\Requests;
 
 use App\ItemFilters;
 
+use Illuminate\Database\Eloquent\Collection;
+
 class ItemController extends Controller
 {
-    /**
-    * Display a listing of the resource.
-    *
-    * @return Response
-    */
-   public function index(ItemFilters $filters)
-   {
-    //    dd($request->all());
 
-       return Item::filter($filters)->get();
+   public function index(Request $request)
+   {
+       $data = Item::with(['categories'=>function($query){
+                  $query->select('name');
+               }])->get();
+        try {            
+            if ($request->exists('name'))
+            {
+            	$input = $request->name;
+
+            	$data = Item::with(['categories'=>function($query){
+            			   $query->select('name');
+            			}])->where('name', 'like', '%' .$input. '%')
+            			->get();
+            }
+
+            if ($request->exists('description'))
+            {
+            	$input = $request->description;
+
+            	$data = Item::with(['categories'=>function($query){
+            			   $query->select('name');
+            		   }])->where('description', 'like', '%' .$input. '%')
+            			->get();
+            }
+
+            if ($request->exists('unit_cost'))
+            {
+            	$input = $request->unit_cost;
+
+            	$data = Item::with(['categories'=>function($query){
+            			   $query->select('name');
+            		   }])->where('unit_cost', 'like', '%' .$input. '%')
+            			->get();
+            }
+
+            if ($request->exists('created_at'))
+            {
+            	$input = $request->created_at;
+
+            	$data = Item::with(['categories'=>function($query){
+            			   $query->select('name');
+            		   }])->where('created_at', 'like', '%' .$input. '%')
+            			->get();
+            }
+
+            if ($request->exists('updated_at'))
+            {
+            	$input = $request->updated_at;
+
+            	$data = Item::with(['categories'=>function($query){
+            			   $query->select('name');
+            		   }])->where('updated_at', 'like', '%' .$input. '%')
+            			->get();
+            }
+
+
+            if (count($data) === 0)
+            {
+                $response = ['error' => [
+                 "http_code" => 200,
+                 "response_msg" => "No data found.",
+                 "response_code" => "NO_DATA_FOUND",
+                 "exception" => "No items found."
+                 ]
+                ];
+
+                $data = ['error'=> $response['error']['exception']];
+                $message = $response['error']['response_msg'];
+                $message_code = $response['error']['response_code'];
+
+                return ResponseService::success($message, $data, 200, $message_code);
+
+            }else if (count($data) != 0){
+
+                $response =  ['items'=> $data];
+                return ResponseService::success('Here\'s the following items', $response);
+
+            }
+
+        } catch (\Exception $e) {
+            $response = ['error' => [
+             "http_code" => 400,
+             "response_msg" => "UNDEFINED",
+             "response_code" => "UNDEFINED",
+             "exception" =>"NO DATA"
+             ]
+            ];
+
+            $data = ['error'=> $response['error']['exception']];
+            $message = $response['error']['response_msg'];
+            $message_code = $response['error']['response_code'];
+
+            return ResponseService::error($message, $data, 400, $message_code);
+        }
 
    }
    /**
