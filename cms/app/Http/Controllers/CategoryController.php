@@ -28,6 +28,28 @@ class CategoryController extends Controller
         $data = Category::all();
 
         try {
+
+            if ($request->exists('q'))
+            {
+                $input = $request->q;
+
+                $dataCount = Category::where('name', 'like', '%' .$input. '%')
+                        ->orWhere('created_at', 'like', '%' .$input. '%')
+                        ->orWhere('updated_at', 'like', '%' .$input. '%')
+                        ->count();
+
+                if($dataCount != 0)
+                {
+                    $data = Category::where('name', 'like', '%' .$input. '%')
+                            ->orWhere('created_at', 'like', '%' .$input. '%')
+                            ->orWhere('updated_at', 'like', '%' .$input. '%')
+                            ->get();
+
+                }else{
+                    $data = null;
+                }
+            }
+
             if ($request->exists('name')){
                 $input = $request->name;
 
