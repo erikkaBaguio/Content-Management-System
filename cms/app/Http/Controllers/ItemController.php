@@ -16,10 +16,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-use App\ItemFilters;
-
-use Illuminate\Database\Eloquent\Collection;
-
 class ItemController extends Controller
 {
 
@@ -28,7 +24,40 @@ class ItemController extends Controller
        $data = Item::with(['categories'=>function($query){
                   $query->select('name');
                }])->get();
-        try {            
+        try {
+
+            if ($request->exists('q'))
+            {
+                $input = $request->q;
+
+                $dataCount = Item::with(['categories'=>function($query){
+            			   $query->select('name');
+            			}])->where('name', 'like', '%' .$input. '%')
+                        ->orWhere('description', 'like', '%' .$input. '%')
+                        ->orWhere('unit_cost', 'like', '%' .$input. '%')
+                        ->orWhere('created_at', 'like', '%' .$input. '%')
+                        ->orWhere('updated_at', 'like', '%' .$input. '%')
+                        ->count();
+
+                if($dataCount != 0)
+                {
+                    $data = Item::with(['categories'=>function($query){
+                			   $query->select('name');
+                           }])->where('name', 'like', '%' .$input. '%')
+                            ->orWhere('description', 'like', '%' .$input. '%')
+                            ->orWhere('unit_cost', 'like', '%' .$input. '%')
+                            ->orWhere('created_at', 'like', '%' .$input. '%')
+                            ->orWhere('updated_at', 'like', '%' .$input. '%')
+                            ->get();
+
+                }else{
+                    $data = null;
+                }
+
+
+
+            }
+
             if ($request->exists('name'))
             {
             	$input = $request->name;
