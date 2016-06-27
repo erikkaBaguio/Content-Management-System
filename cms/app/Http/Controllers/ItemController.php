@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Http\Services\RetrieveDataService;
+
 class ItemController extends Controller
 {
 
@@ -24,7 +26,7 @@ class ItemController extends Controller
        $data = Item::with(['categories'=>function($query){
                   $query->select('name');
                }])->get();
-        try {
+        // try {
 
             if ($request->exists('q'))
             {
@@ -55,54 +57,40 @@ class ItemController extends Controller
                 }
             }
 
-            if ($request->exists('name'))
+            if ($request->exists('name') || $request->exists('description'))
             {
-            	$input = $request->name;
+                $input = $request->name;
 
-            	$data = Item::with(['categories'=>function($query){
-            			   $query->select('name');
-            			}])->where('name', 'like', '%' .$input. '%')
-            			->get();
+                $data = RetrieveDataService::search('name', $input);
+                // $data = RetrieveDataService::search($field);
             }
 
             if ($request->exists('description'))
             {
             	$input = $request->description;
 
-            	$data = Item::with(['categories'=>function($query){
-            			   $query->select('name');
-            		   }])->where('description', 'like', '%' .$input. '%')
-            			->get();
+            	$data = RetrieveDataService::search('description', $input);
             }
 
             if ($request->exists('unit_cost'))
             {
             	$input = $request->unit_cost;
 
-            	$data = Item::with(['categories'=>function($query){
-            			   $query->select('name');
-            		   }])->where('unit_cost', 'like', '%' .$input. '%')
-            			->get();
+            	$data = RetrieveDataService::search('unit_cost', $input);
             }
 
             if ($request->exists('created_at'))
             {
             	$input = $request->created_at;
 
-            	$data = Item::with(['categories'=>function($query){
-            			   $query->select('name');
-            		   }])->where('created_at', 'like', '%' .$input. '%')
-            			->get();
+            	$data = RetrieveDataService::search('created_at', $input);
             }
 
             if ($request->exists('updated_at'))
             {
             	$input = $request->updated_at;
 
-            	$data = Item::with(['categories'=>function($query){
-            			   $query->select('name');
-            		   }])->where('updated_at', 'like', '%' .$input. '%')
-            			->get();
+            	$data = RetrieveDataService::search('updated_at', $input);
             }
 
 
@@ -117,7 +105,7 @@ class ItemController extends Controller
                 ];
 
                 $data = ['error'=> $response['error']['exception']];
-                $message = $response['error']['response_msg'];
+                $message = "No data found.";//$response['error']['response_msg'];
                 $message_code = $response['error']['response_code'];
 
                 return ResponseService::success($message, $data, 200, $message_code);
@@ -129,21 +117,21 @@ class ItemController extends Controller
 
             }
 
-        } catch (\Exception $e) {
-            $response = ['error' => [
-             "http_code" => 400,
-             "response_msg" => "UNDEFINED",
-             "response_code" => "UNDEFINED",
-             "exception" =>"NO DATA"
-             ]
-            ];
-
-            $data = ['error'=> $response['error']['exception']];
-            $message = $response['error']['response_msg'];
-            $message_code = $response['error']['response_code'];
-
-            return ResponseService::error($message, $data, 400, $message_code);
-        }
+        // } catch (\Exception $e) {
+        //     $response = ['error' => [
+        //      "http_code" => 400,
+        //      "response_msg" => "UNDEFINED",
+        //      "response_code" => "UNDEFINED",
+        //      "exception" =>"NO DATA"
+        //      ]
+        //     ];
+        //
+        //     $data = ['error'=> $response['error']['exception']];
+        //     $message = $response['error']['response_msg'];
+        //     $message_code = $response['error']['response_code'];
+        //
+        //     return ResponseService::error($message, $data, 400, $message_code);
+        // }
 
    }
    /**
