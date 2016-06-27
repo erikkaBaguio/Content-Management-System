@@ -26,6 +26,7 @@ class ItemController extends Controller
        $data = Item::with(['categories'=>function($query){
                   $query->select('name');
                }])->get();
+
         // try {
 
             if ($request->exists('q'))
@@ -57,40 +58,41 @@ class ItemController extends Controller
                 }
             }
 
-            if ($request->exists('name') || $request->exists('description'))
+            if ($request->only('name','description','unit_cost','created_at','updated_at'))
             {
-                $input = $request->name;
+                $name = $request->name;
+                $description = $request->description;
+                $unit_cost = $request->unit_cost;
+                $created_at = $request->created_at;
+                $updated_at = $request->updateed_at;
 
-                $data = RetrieveDataService::search('name', $input);
-                // $data = RetrieveDataService::search($field);
-            }
+                if ($name)
+                {
+                    $field = 'name';
+                    $input = $name;
+                }
+                if ($description)
+                {
+                    $field = 'description';
+                    $input = $description;
+                }
+                if ($unit_cost)
+                {
+                    $field = 'unit_cost';
+                    $input = $unit_cost;
+                }
+                if ($created_at)
+                {
+                    $field = 'created_at';
+                    $input = $created_at;
+                }
+                if ($updated_at)
+                {
+                    $field = 'updated_at';
+                    $input = $updated_at;
+                }
 
-            if ($request->exists('description'))
-            {
-            	$input = $request->description;
-
-            	$data = RetrieveDataService::search('description', $input);
-            }
-
-            if ($request->exists('unit_cost'))
-            {
-            	$input = $request->unit_cost;
-
-            	$data = RetrieveDataService::search('unit_cost', $input);
-            }
-
-            if ($request->exists('created_at'))
-            {
-            	$input = $request->created_at;
-
-            	$data = RetrieveDataService::search('created_at', $input);
-            }
-
-            if ($request->exists('updated_at'))
-            {
-            	$input = $request->updated_at;
-
-            	$data = RetrieveDataService::search('updated_at', $input);
+                $data = RetrieveDataService::itemSearch($field, $input);
             }
 
 
