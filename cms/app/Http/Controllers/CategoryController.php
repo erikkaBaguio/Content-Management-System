@@ -51,24 +51,31 @@ class CategoryController extends Controller
                 }
             }
 
-            if ($request->exists('name')){
-                $input = $request->name;
 
-                $data = RetrieveDataService::categorySearch('name', $input);
-            }
 
-            if ($request->exists('created_at'))
+            if ($request->only('name', 'created_at', 'updated_at'))
             {
-            	$input = $request->created_at;
+                $name = $request->name;
+                $created_at = $request->created_at;
+                $updated_at = $request->updated_at;
 
-            	$data = RetrieveDataService::categorySearch('created_at', $input);
-            }
+                if ($name)
+                {
+                    $field = 'name';
+                    $input = $name;
+                }
+                if ($created_at)
+                {
+                    $field = 'created_at';
+                    $input = $created_at;
+                }
+                if ($updated_at)
+                {
+                    $field = 'updated_at';
+                    $input = $updated_at;
+                }
 
-            if ($request->exists('updated_at'))
-            {
-            	$input = $request->updated_at;
-
-            	$data = RetrieveDataService::categorySearch('updated_at', $input);
+                $data = RetrieveDataService::categorySearch($field, $input);
             }
 
             if (count($data) === 0) {

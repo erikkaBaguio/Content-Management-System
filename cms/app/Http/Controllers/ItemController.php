@@ -27,7 +27,7 @@ class ItemController extends Controller
                   $query->select('name');
                }])->get();
 
-        // try {
+        try {
 
             if ($request->exists('q'))
             {
@@ -64,7 +64,7 @@ class ItemController extends Controller
                 $description = $request->description;
                 $unit_cost = $request->unit_cost;
                 $created_at = $request->created_at;
-                $updated_at = $request->updateed_at;
+                $updated_at = $request->updated_at;
 
                 if ($name)
                 {
@@ -119,21 +119,21 @@ class ItemController extends Controller
 
             }
 
-        // } catch (\Exception $e) {
-        //     $response = ['error' => [
-        //      "http_code" => 400,
-        //      "response_msg" => "UNDEFINED",
-        //      "response_code" => "UNDEFINED",
-        //      "exception" =>"NO DATA"
-        //      ]
-        //     ];
-        //
-        //     $data = ['error'=> $response['error']['exception']];
-        //     $message = $response['error']['response_msg'];
-        //     $message_code = $response['error']['response_code'];
-        //
-        //     return ResponseService::error($message, $data, 400, $message_code);
-        // }
+        } catch (\Exception $e) {
+            $response = ['error' => [
+             "http_code" => 400,
+             "response_msg" => "UNDEFINED",
+             "response_code" => "UNDEFINED",
+             "exception" =>"NO DATA"
+             ]
+            ];
+
+            $data = ['error'=> $response['error']['exception']];
+            $message = $response['error']['response_msg'];
+            $message_code = $response['error']['response_code'];
+
+            return ResponseService::error($message, $data, 400, $message_code);
+        }
 
    }
    /**
