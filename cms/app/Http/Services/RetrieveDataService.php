@@ -30,4 +30,14 @@ Class RetrieveDataService
 
         return $data;
     }
+
+
+    public static function categorySearch($field, $input)
+    {
+        // $input = $this->request->$field;
+
+        $data = Category::where($field,'like','%' .$input. '%')->get();
+
+        return $data;
+    }
 }

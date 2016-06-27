@@ -14,6 +14,7 @@ use Validator;
 
 use App\Http\Controllers\Controller;
 
+use App\Http\Services\RetrieveDataService;
 
 
 class CategoryController extends Controller
@@ -53,23 +54,21 @@ class CategoryController extends Controller
             if ($request->exists('name')){
                 $input = $request->name;
 
-                $data = Category::where('name','like','%' .$input. '%')->get();
+                $data = RetrieveDataService::categorySearch('name', $input);
             }
 
             if ($request->exists('created_at'))
             {
             	$input = $request->created_at;
 
-            	$data = Category::where('created_at', 'like', '%' .$input. '%')
-            			->get();
+            	$data = RetrieveDataService::categorySearch('created_at', $input);
             }
 
             if ($request->exists('updated_at'))
             {
             	$input = $request->updated_at;
 
-            	$data = Category::where('updated_at', 'like', '%' .$input. '%')
-            			->get();
+            	$data = RetrieveDataService::categorySearch('updated_at', $input);
             }
 
             if (count($data) === 0) {
